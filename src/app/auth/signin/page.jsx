@@ -144,59 +144,7 @@ const Signin = () => {
 
 
 
-  const signinFormSubmit = async (formData)=>{
-    const data = {
-      phone: formData.get('phone'),
-      password: formData.get('password'),
-    }
 
-
-    if(data.phone == '' && data.password == ''){
-      setAlertData({
-        type: alertType.W,
-        message: "Please fill the all credentials"
-      })
-      SnackbarOpenHandleClick()
-    }else{
-      const postData = {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      };
-  
-      const res = await fetch(
-        '/api/auth/signin',
-        postData
-      )
-      const response = await res.json()
-      const userUrl = {
-        'Farmer': 'farmer-dashboard',
-        'Trader': 'trader-dashboard',
-        'Wholesaler': 'wholesaler-dashboard',
-        'Retailer': 'retailer-dashboard',
-        'Admin': 'admin-dashboard'
-      }
-      console.log(response)
-      setAlertData({
-        type: alertType[response.status],
-        message: response.message
-      })
-      SnackbarOpenHandleClick()
-  
-      if(response.status == 200){
-        router.push(`/users/${userUrl[response.user_data.user_type]}`)
-      }
-
-    }
-
-
-
-    setSubmitLoading(false)
-
-
-  };
 
 
 
@@ -222,7 +170,7 @@ const Signin = () => {
               <Stack alignItems="center">
                 <span className="bar"></span>
                 <div className="login-form-wrapper">
-                  <form className="login-form" action={signinFormSubmit} autoComplete="off" noValidate>
+                  <form className="login-form" autoComplete="off" noValidate>
                     <TextField
                       className="phone-number"
                       variant="outlined"

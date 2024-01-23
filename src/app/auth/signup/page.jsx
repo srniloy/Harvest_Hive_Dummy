@@ -141,78 +141,7 @@ const alertType = {
 
 
 
-   const signupFormSubmit = async (formData)=>{
-    const date = new Date();
-    const data = {
-      user_id: formData.get('user_type')[0] +date.valueOf(),
-      name: formData.get('name'),
-      user_type: formData.get('user_type'),
-      phone: formData.get('phone'),
-      address: formData.get('address'),
-      nid: formData.get('nid'),
-      birth_date: formData.get('birth_date'),
-      password: formData.get('password'),
-    }
 
-    console.log(formData.get('signup_term_check'))
-
-    if(!(data.name != '' && data.user_type != '' && data.phone != '' && data.address != '' && data.nid != '' && data.birth_date != '' && data.password != '')){
-      setAlertData({
-        type: alertType.W,
-        message: "Please fill the all informations"
-      })
-      SnackbarOpenHandleClick()
-    }
-    else if(!(data.password === formData.get('confirm_password'))){
-      setAlertData({
-        type: alertType.W,
-        message: "Password doesn't match"
-      })
-      SnackbarOpenHandleClick()
-    }
-    else if(formData.get('signup_term_check') !== 'on'){
-      setAlertData({
-        type: alertType.I,
-        message: "Please accept the terms and conditions"
-      })
-      SnackbarOpenHandleClick()
-    }
-    else{
-      const postData = {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      };
-  
-      const res = await fetch(
-        '/api/auth/signup',
-        postData
-      )
-      const response = await res.json()
-      console.log(response );
-      setAlertData({
-        type: alertType[response.status],
-        message: response.message
-      })
-      SnackbarOpenHandleClick()
-      if(response.status == 200){
-        router.push('/auth/signin')
-      }
-    }
-
-
-    
-  
-
-
-
-    setSubmitLoading(false)
-
-
-
-  };
 
 
 
@@ -250,7 +179,7 @@ const alertType = {
               <Stack alignItems="center">
                 <span className="bar"></span>
                 <div className="login-form-wrapper">
-                  <form className="login-form signup-form" action={signupFormSubmit} autoComplete="off" noValidate>
+                  <form className="login-form signup-form" autoComplete="off" noValidate>
                     <Grid container spacing={2}>
                       <Grid item xs={6}>
                         <TextField
